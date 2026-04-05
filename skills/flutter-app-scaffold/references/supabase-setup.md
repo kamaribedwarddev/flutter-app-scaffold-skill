@@ -66,6 +66,96 @@ supabase start   # Starts local Supabase (first run downloads images, takes a fe
 
 Capture the output — it contains the local `API URL` and `anon key`. Update `.env.dev` with these values.
 
+### Optional: Supabase MCP Server Setup
+
+If the user opted for the Supabase MCP server during discovery, set it up after local Supabase is running. The MCP server gives Claude direct access to the Supabase project — it can run SQL, apply migrations, list tables, deploy Edge Functions, and more, without the user needing to copy-paste between the dashboard and the terminal.
+
+**Step 1: Check prerequisites**
+
+The MCP server requires Node.js (for `npx`). Check:
+```bash
+node --version  # Should be 18+
+```
+
+If not installed, tell the user:
+```
+You'll need Node.js installed to run the Supabase MCP server.
+Install it from https://nodejs.org (LTS version recommended).
+Let me know when it's installed.
+```
+
+**Step 2: Create `.mcp.json`**
+
+Create a `.mcp.json` file in the project root with the Supabase MCP server configuration.
+
+For **local development** (connects to local Supabase started via Docker):
+```json
+{
+  "mcpServers": {
+    "supabase": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@supabase/mcp-server-supabase@latest",
+        "--read-only=false",
+        "--project-ref=local",
+        "--api-url=http://127.0.0.1:54331/mcp",
+        "--db-url=postgresql://postgres:postgres@127.0.0.1:54332/postgres"
+      ]
+    }
+  }
+}
+```
+
+For **production** (connects to cloud Supabase project — use the user's project ref):
+```json
+{
+  "mcpServers": {
+    "supabase": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@supabase/mcp-server-supabase@latest",
+        "--read-only=false",
+        "--project-ref=<their-project-ref>"
+      ]
+    }
+  }
+}
+```
+
+The project ref is the subdomain from the Supabase URL (e.g., `abcdefgh` from `https://abcdefgh.supabase.co`). For production, the MCP server authenticates via the Supabase CLI login (`supabase login`).
+
+**Step 3: Enable in Claude Code settings**
+
+Add to `.claude/settings.local.json` in the project:
+```json
+{
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": ["supabase"]
+}
+```
+
+**Step 4: Verify**
+
+After restarting Claude Code (or starting a new conversation), the Supabase MCP tools should be available. Test by listing tables:
+- Use the `mcp__supabase__list_tables` tool to verify connectivity.
+
+**What the MCP server enables:**
+
+Once set up, you can use MCP tools throughout the build instead of writing raw SQL files and running them manually:
+- `execute_sql` — Run queries directly against the database
+- `apply_migration` — Create and apply numbered migration files
+- `list_tables` — Inspect the current schema
+- `list_migrations` — See which migrations have been applied
+- `deploy_edge_function` — Deploy Edge Functions directly
+- `get_logs` — Check Edge Function and API logs
+- `list_extensions` — See installed Postgres extensions
+
+This is especially useful during the database schema phase (Phase 2) and any phase that involves writing migrations or Edge Functions — Claude can apply changes directly and verify them without the user running CLI commands.
+
+**Note:** Start with the local configuration during development. Switch to the production configuration when deploying to cloud Supabase.
+
 ---
 
 ## Local Development

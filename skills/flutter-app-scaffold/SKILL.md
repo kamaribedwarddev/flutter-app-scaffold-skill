@@ -1,6 +1,6 @@
 ---
 name: flutter-app-scaffold
-description: Scaffold a complete Flutter mobile app from an idea. Guides users through project creation, architecture setup (Riverpod, GoRouter, Freezed), optional Supabase database, authentication, and modular features (gamification, notifications, home widgets, subscriptions). Creates a phased implementation plan and walks through each phase, pausing for manual steps. Use this skill whenever a user wants to create a new Flutter app, start a mobile project, scaffold an app from an idea, or set up a Flutter project with clean architecture — even if they don't say "scaffold" explicitly.
+description: Use this skill when the user wants to build a new mobile app from scratch, create a new Flutter project, start a new app from an idea, or asks "where do I start" with a mobile app concept. Guides them from idea to production-ready Flutter app through a phased implementation plan — interviewing about features, setting up clean architecture (Riverpod, GoRouter, Freezed), optional Supabase database with MCP server, authentication, and modular add-ons (gamification, notifications, home widgets, subscriptions). Trigger this skill for any request that involves creating a NEW Flutter app or turning an app idea into code — including vague requests like "I want to build an app for X" or "help me make a mobile app". Do NOT trigger for requests to fix, modify, refactor, or deploy an existing app.
 ---
 
 # Flutter App Scaffold
@@ -44,6 +44,8 @@ Start here every time. Your goal is to gather enough information to generate a c
    - **Home screen widgets**: iOS WidgetKit + Android AppWidget
    - **Subscriptions/monetization**: RevenueCat-based subscription tiers
 
+8. **Supabase MCP server** (if database selected): Ask if the user wants to install the Supabase MCP server. This gives Claude direct access to their Supabase project during development — it can run SQL queries, apply migrations, manage Edge Functions, and inspect tables without the user needing to copy-paste between the Supabase dashboard and the terminal. It's optional but significantly speeds up database-related phases. If they say yes, follow the setup steps in `references/supabase-setup.md` § Supabase MCP Server Setup.
+
 ### What You're Building Toward
 
 By the end of this interview you should know:
@@ -52,6 +54,7 @@ By the end of this interview you should know:
 - What data needs to be stored and how it relates
 - Which optional modules to include
 - Where design inspiration lives (folder path or description)
+- Whether to set up the Supabase MCP server (if database selected)
 
 If the user is vague, help them think through it. Ask "what happens when a user opens the app for the first time?" or "what does the main screen show?" to draw out specifics.
 
@@ -253,7 +256,7 @@ When implementing optional modules, read the corresponding reference file for de
 
 | Module | Reference File | Key Manual Steps |
 |--------|---------------|-----------------|
-| Supabase database | `references/supabase-setup.md` | Supabase project creation, Docker for local dev |
+| Supabase database | `references/supabase-setup.md` | Supabase project creation, Docker for local dev, optional MCP server |
 | Authentication | `references/modules/auth.md` | Apple Developer, Google Cloud Console |
 | Onboarding | `references/modules/onboarding.md` | None |
 | Gamification | `references/modules/gamification.md` | None |
