@@ -1,0 +1,8 @@
+{
+  "name": "flutter-app-scaffold",
+  "description": "Scaffold a complete Flutter mobile app from an idea. Guides through project creation, architecture setup (Riverpod, GoRouter, Freezed), optional Supabase backend, authentication, and modular features.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Kamari"
+  }
+}

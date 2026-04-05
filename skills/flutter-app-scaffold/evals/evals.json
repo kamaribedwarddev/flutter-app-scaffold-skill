@@ -1,0 +1,23 @@
+{
+  "skill_name": "flutter-app-scaffold",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I want to build a meditation timer app. It should have a timer with customizable durations, ambient sounds, and a history of past sessions stored locally. I want it to feel calm and minimal — think Headspace but simpler. iOS and Android. No backend needed. I have some design screenshots in ~/designs/meditation/",
+      "expected_output": "Should interview briefly to fill gaps, then generate an implementation plan with phases for: project setup, design system (calm/minimal theme), timer feature, ambient sounds, session history (local storage). Should NOT include database, auth, or server-side modules. Should ask about the design folder.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "I'm building a recipe sharing app called 'Potluck'. Users create accounts, save recipes with photos, and can join cooking circles where they share recipes with friends. I want notifications when someone adds a recipe to my circle, gamification for trying new recipes, and eventually a premium tier for unlimited recipe storage. Both platforms. I need a database. My design vibe is warm and cozy — think terracotta, cream, handwritten-feeling fonts.",
+      "expected_output": "Should generate a comprehensive implementation plan with 8+ phases covering: project setup, Supabase database, auth, recipes CRUD, circles/sharing, notifications (FCM), gamification, subscriptions. Design system should use warm terracotta/cream palette. Should include manual steps for Supabase, Apple/Google auth, Firebase, RevenueCat.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "I have an idea for an app that helps people track their houseplants. Like when to water them, how much sun they need, stuff like that. I'm not really sure about all the details yet. Can you help me figure this out?",
+      "expected_output": "Should NOT jump to generating code or a plan. Should conduct a discovery interview: ask about core features, whether they need accounts/sync, target platforms, design preferences, optional modules. Should help the user think through their app idea conversationally.",
+      "files": []
+    }
+  ]
+}
